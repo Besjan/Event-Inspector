@@ -1,4 +1,4 @@
-﻿namespace BeeX.Event
+﻿namespace Cuku.Event
 {
     using System;
     using UnityEngine.EventSystems;

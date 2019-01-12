@@ -1,4 +1,4 @@
-﻿namespace BeeX.Event
+﻿namespace Cuku.Event
 {
     public class OnTriggerEnterEvent : EventBase
     {
