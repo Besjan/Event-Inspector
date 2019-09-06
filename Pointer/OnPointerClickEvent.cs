@@ -9,9 +9,11 @@
 		private double clickCount = 1;
 		[SerializeField]
 		private float clickTime = 0.2f;
+
 		private float pointerDownTime;
 		private float lastClickTime;
-		public int clicksMade;
+
+		private int clicksMade;
 
 		public void OnPointerDown(PointerEventData eventData)
 		{
