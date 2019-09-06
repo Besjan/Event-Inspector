@@ -1,14 +1,17 @@
 ﻿namespace Cuku.Event
 {
-	using UnityEngine;
+    using UnityEngine;
 	using UnityEngine.EventSystems;
 
-	public class OnPointerClickEvent : PointerEvent, IPointerDownHandler, IPointerClickHandler
+	public class OnPointerClickEvent : PointerEvent, IPointerDownHandler, IPointerUpHandler
 	{
 		[SerializeField]
 		private double clickCount = 1;
 		[SerializeField]
 		private float clickTime = 0.2f;
+
+        [Sirenix.OdinInspector.PropertyOrder(3)]
+		public ByteSheep.Events.AdvancedEvent OnFail;
 
 		private float pointerDownTime;
 		private float lastClickTime;
@@ -20,7 +23,7 @@
 			pointerDownTime = Time.time;
 		}
 
-		public void OnPointerClick(PointerEventData eventData)
+		public void OnPointerUp(PointerEventData eventData)
 		{
 			if (eventData.button != Button)
 				return;
@@ -32,7 +35,7 @@
 			}
 			else
 			{
-				clicksMade = 0;
+				Failed();
 			}
 		}
 
@@ -45,16 +48,26 @@
 			{
 				if (clickCount == clicksMade)
 				{
+					CancelInvoke();
 					OnEvent.Invoke();
 					clicksMade = 0;
+					return;
 				}
 			}
 			else
 			{
-				clicksMade = 0;
+				Failed();
 			}
 
 			lastClickTime = Time.time;
+
+			Invoke("Failed", clickTime);
+		}
+
+		void Failed()
+		{
+			clicksMade = 0;
+			OnFail.Invoke();
 		}
 	}
 }
